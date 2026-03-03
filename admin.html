@@ -4,21 +4,31 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin</title>
-<link rel="stylesheet" href="assets/css/base.css">
-<link rel="stylesheet" href="assets/css/theme.css">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<nav class="navbar">
-  <a href="index.html">← กลับ Dashboard</a>
-</nav>
+<h1>หลังบ้านแอดมิน</h1>
 
-<section class="container">
-  <div class="card">
-    <h2>Admin Panel</h2>
-    <p>กำลังพัฒนา...</p>
-  </div>
-</section>
+<div class="card">
+  <h2>เพิ่มรายการ</h2>
+  <select id="type">
+    <option value="income">รายรับ</option>
+    <option value="expense">รายจ่าย</option>
+  </select>
+  <input type="number" id="amount" placeholder="จำนวนเงิน">
+  <button onclick="addTransaction()">บันทึก</button>
+</div>
 
+<div class="card">
+  <h2>สรุป</h2>
+  <p>รายรับ: <span id="income">0</span></p>
+  <p>รายจ่าย: <span id="expense">0</span></p>
+  <p>กำไรสุทธิ: <span id="profit">0</span></p>
+</div>
+
+<a href="index.html">กลับหน้าลูกค้า</a>
+
+<script src="script.js"></script>
 </body>
 </html>
