@@ -3,29 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Julie Biz Manager</title>
+<title>PingJudy - Admin</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>Julie Biz Manager</h1>
+<div class="container">
 
-<div class="card">
-  <h2>สถานะคิว</h2>
-  <p id="queueStatus">0 / 10</p>
-  <button onclick="bookQueue()">จองคิว</button>
-</div>
+  <div class="logo-circle">PINGJUDY</div>
+  <h1>Admin Dashboard</h1>
 
-<div class="card">
-  <h2>ตัวอย่างผลงาน</h2>
-  <div class="portfolio">
-    <div class="work">งานตัวอย่าง 1</div>
-    <div class="work">งานตัวอย่าง 2</div>
-    <div class="work">งานตัวอย่าง 3</div>
+  <!-- เพิ่มคิวใหม่ -->
+  <div class="card">
+    <h2>เพิ่มคิวใหม่</h2>
+
+    <input type="text" id="customerName" placeholder="ชื่อลูกค้า">
+    <input type="text" id="jobName" placeholder="ชื่องาน">
+
+    <select id="status">
+      <option value="waiting">รอคิว</option>
+      <option value="doing">กำลังทำ</option>
+      <option value="review">รอตรวจงาน</option>
+      <option value="done">เสร็จแล้ว</option>
+    </select>
+
+    <textarea id="progressDetail" placeholder="รายละเอียดเพิ่มเติม เช่น กำลังลงสี"></textarea>
+
+    <button onclick="addOrder()">เพิ่มคิว</button>
   </div>
-</div>
 
-<a href="admin.html">เข้าสู่ระบบแอดมิน</a>
+  <!-- แสดงรายการคิว -->
+  <div class="card">
+    <h2>รายการคิวทั้งหมด</h2>
+    <div id="orderList"></div>
+    <button class="danger" onclick="clearAll()">ล้างคิวทั้งหมด</button>
+  </div>
+
+</div>
 
 <script src="script.js"></script>
 </body>
