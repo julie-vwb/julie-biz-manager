@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PingJudy - Admin</title>
+<title>PingJudy</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,32 +11,26 @@
 <div class="container">
 
   <div class="logo-circle">PINGJUDY</div>
-  <h1>Admin Dashboard</h1>
+  <h1>สถานะคิวงาน</h1>
 
-  <!-- เพิ่มคิวใหม่ -->
-  <div class="card">
-    <h2>เพิ่มคิวใหม่</h2>
-
-    <input type="text" id="customerName" placeholder="ชื่อลูกค้า">
-    <input type="text" id="jobName" placeholder="ชื่องาน">
-
-    <select id="status">
-      <option value="waiting">รอคิว</option>
-      <option value="doing">กำลังทำ</option>
-      <option value="review">รอตรวจงาน</option>
-      <option value="done">เสร็จแล้ว</option>
-    </select>
-
-    <textarea id="progressDetail" placeholder="รายละเอียดเพิ่มเติม เช่น กำลังลงสี"></textarea>
-
-    <button onclick="addOrder()">เพิ่มคิว</button>
+  <!-- กำลังทำ -->
+  <div class="card highlight">
+    <h2>🎨 ตอนนี้กำลังทำ</h2>
+    <div id="currentWork">ยังไม่มีงานกำลังทำ</div>
   </div>
 
-  <!-- แสดงรายการคิว -->
+  <!-- ค้นหา -->
   <div class="card">
-    <h2>รายการคิวทั้งหมด</h2>
-    <div id="orderList"></div>
-    <button class="danger" onclick="clearAll()">ล้างคิวทั้งหมด</button>
+    <h2>🔍 ค้นหาออเดอร์ของคุณ</h2>
+    <input type="text" id="searchInput" placeholder="กรอกหมายเลข เช่น ORD1001">
+    <button onclick="searchOrder()">ค้นหา</button>
+    <div id="searchResult"></div>
+  </div>
+
+  <!-- คิวทั้งหมด -->
+  <div class="card">
+    <h2>📋 คิวทั้งหมด</h2>
+    <div id="publicQueue"></div>
   </div>
 
 </div>
