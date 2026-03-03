@@ -1,71 +1,110 @@
-// ---------- คิว ----------
-function getQueue() {
-  return Number(localStorage.getItem("queue")) || 0;
+// ====== ดึงข้อมูลจาก localStorage ======
+function getOrders() {
+  return JSON.parse(localStorage.getItem("pingjudy_orders")) || [];
 }
 
-function setQueue(value) {
-  localStorage.setItem("queue", value);
+function saveOrders(data) {
+  localStorage.setItem("pingjudy_orders", JSON.stringify(data));
 }
 
-function bookQueue() {
-  let queue = getQueue();
-  if (queue >= 10) {
-    alert("คิวเต็มแล้ว");
+// ====== สร้างเลขออเดอร์อัตโนมัติ ======
+function generateOrderId() {
+  let lastId = localStorage.getItem("pingjudy_last_id");
+  if (!lastId) {
+    lastId = 1000;
+  } else {
+    lastId = Number(lastId) + 1;
+  }
+  localStorage.setItem("pingjudy_last_id", lastId);
+  return "ORD" + lastId;
+}
+
+// ====== เพิ่มคิวใหม่ ======
+function addOrder() {
+  const name = document.getElementById("customerName").value.trim();
+  const job = document.getElementById("jobName").value.trim();
+  const status = document.getElementById("status").value;
+  const progress = document.getElementById("progressDetail").value.trim();
+
+  if (!name || !job) {
+    alert("กรอกข้อมูลให้ครบ");
     return;
   }
-  queue++;
-  setQueue(queue);
-  updateQueue();
+
+  const orders = getOrders();
+
+  const newOrder = {
+    id: generateOrderId(),
+    name: name,
+    job: job,
+    status: status,
+    progress: progress,
+    createdAt: new Date().getTime()
+  };
+
+  orders.push(newOrder);
+  saveOrders(orders);
+
+  document.getElementById("customerName").value = "";
+  document.getElementById("jobName").value = "";
+  document.getElementById("progressDetail").value = "";
+
+  renderOrders();
 }
 
-function updateQueue() {
-  const el = document.getElementById("queueStatus");
-  if (el) {
-    el.innerText = getQueue() + " / 10";
+// ====== แปลงสถานะเป็นข้อความไทย ======
+function translateStatus(status) {
+  switch (status) {
+    case "waiting": return "🟡 รอคิว";
+    case "doing": return "🔵 กำลังทำ";
+    case "review": return "🟣 รอตรวจงาน";
+    case "done": return "🟢 เสร็จแล้ว";
+    default: return status;
   }
 }
 
-// ---------- การเงิน ----------
-function getData() {
-  return JSON.parse(localStorage.getItem("finance")) || [];
-}
+// ====== แสดงรายการคิว ======
+function renderOrders() {
+  const list = document.getElementById("orderList");
+  if (!list) return;
 
-function saveData(data) {
-  localStorage.setItem("finance", JSON.stringify(data));
-}
+  const orders = getOrders();
+  list.innerHTML = "";
 
-function addTransaction() {
-  const type = document.getElementById("type").value;
-  const amount = Number(document.getElementById("amount").value);
+  orders.forEach((order, index) => {
+    const div = document.createElement("div");
+    div.className = "order-item";
 
-  if (!amount) return alert("กรอกจำนวนเงิน");
+    div.innerHTML = `
+      <strong>${order.id}</strong> - ${order.name}<br>
+      งาน: ${order.job}<br>
+      <span class="status">${translateStatus(order.status)}</span><br>
+      <small>${order.progress || ""}</small><br>
+      <button onclick="deleteOrder(${index})" class="danger">ลบ</button>
+    `;
 
-  const data = getData();
-  data.push({ type, amount });
-  saveData(data);
-
-  document.getElementById("amount").value = "";
-  updateFinance();
-}
-
-function updateFinance() {
-  const data = getData();
-  let income = 0;
-  let expense = 0;
-
-  data.forEach(item => {
-    if (item.type === "income") income += item.amount;
-    if (item.type === "expense") expense += item.amount;
+    list.appendChild(div);
   });
+}
 
-  if (document.getElementById("income")) {
-    document.getElementById("income").innerText = income;
-    document.getElementById("expense").innerText = expense;
-    document.getElementById("profit").innerText = income - expense;
+// ====== ลบออเดอร์ ======
+function deleteOrder(index) {
+  const orders = getOrders();
+  orders.splice(index, 1);
+  saveOrders(orders);
+  renderOrders();
+}
+
+// ====== ล้างคิวทั้งหมด ======
+function clearAll() {
+  if (confirm("ล้างคิวทั้งหมดจริงไหม?")) {
+    localStorage.removeItem("pingjudy_orders");
+    localStorage.removeItem("pingjudy_last_id");
+    renderOrders();
   }
 }
 
+// ====== โหลดหน้า ======
 window.onload = function() {
-  updateQueue();
-  updateFinance();
+  renderOrders();
 };
