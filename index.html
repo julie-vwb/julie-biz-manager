@@ -4,51 +4,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Julie Biz Manager</title>
-
-<link rel="stylesheet" href="assets/css/base.css">
-<link rel="stylesheet" href="assets/css/theme.css">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<nav class="navbar">
-  <h1>Julie Biz Manager</h1>
-  <div>
-    <a href="index.html">Dashboard</a>
-    <a href="queue.html">Queue</a>
-    <a href="finance.html">Finance</a>
-    <a href="report.html">Report</a>
-    <a href="admin.html">Admin</a>
-  </div>
-</nav>
-
-<section class="container">
-  <div class="card">
-    <h2>รายรับเดือนนี้</h2>
-    <p id="income">0 บาท</p>
-  </div>
-
-  <div class="card">
-    <h2>รายจ่ายเดือนนี้</h2>
-    <p id="expense">0 บาท</p>
-  </div>
-
-  <div class="card">
-    <h2>กำไรสุทธิ</h2>
-    <p id="profit">0 บาท</p>
-  </div>
+<h1>Julie Biz Manager</h1>
 
 <div class="card">
-  <h2>คิวปัจจุบัน</h2>
-  <p id="queueNow">0 / 0</p>
-  <button id="bookBtn">จองคิว</button>
-  <div class="progress-bar">
-    <div id="progressFill"></div>
+  <h2>สถานะคิว</h2>
+  <p id="queueStatus">0 / 10</p>
+  <button onclick="bookQueue()">จองคิว</button>
+</div>
+
+<div class="card">
+  <h2>ตัวอย่างผลงาน</h2>
+  <div class="portfolio">
+    <div class="work">งานตัวอย่าง 1</div>
+    <div class="work">งานตัวอย่าง 2</div>
+    <div class="work">งานตัวอย่าง 3</div>
   </div>
 </div>
 
-<script src="config/config.js"></script>
-<script src="assets/js/storage.js"></script>
-<script src="assets/js/queue.js"></script>
-  
+<a href="admin.html">เข้าสู่ระบบแอดมิน</a>
+
+<script src="script.js"></script>
 </body>
 </html>
