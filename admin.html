@@ -3,31 +3,54 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin</title>
+<title>PingJudy - Admin</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>หลังบ้านแอดมิน</h1>
+<div class="container">
 
-<div class="card">
-  <h2>เพิ่มรายการ</h2>
-  <select id="type">
-    <option value="income">รายรับ</option>
-    <option value="expense">รายจ่าย</option>
-  </select>
-  <input type="number" id="amount" placeholder="จำนวนเงิน">
-  <button onclick="addTransaction()">บันทึก</button>
+  <!-- หน้า Login -->
+  <div id="loginBox" class="card">
+    <h2>🔐 เข้าสู่ระบบแอดมิน</h2>
+    <input type="password" id="adminPassword" placeholder="กรอกรหัสผ่าน">
+    <button onclick="checkLogin()">เข้าสู่ระบบ</button>
+    <p id="loginError" style="color:red;"></p>
+  </div>
+
+  <!-- หน้า Dashboard -->
+  <div id="adminPanel" style="display:none;">
+
+    <div class="logo-circle">PINGJUDY</div>
+    <h1>Admin Dashboard</h1>
+
+    <div class="card">
+      <h2>เพิ่มคิวใหม่</h2>
+
+      <input type="text" id="customerName" placeholder="ชื่อลูกค้า">
+      <input type="text" id="jobName" placeholder="ชื่องาน">
+
+      <select id="status">
+        <option value="waiting">รอคิว</option>
+        <option value="doing">กำลังทำ</option>
+        <option value="review">รอตรวจงาน</option>
+        <option value="done">เสร็จแล้ว</option>
+      </select>
+
+      <textarea id="progressDetail" placeholder="รายละเอียดเพิ่มเติม เช่น กำลังลงสี"></textarea>
+
+      <button onclick="addOrder()">เพิ่มคิว</button>
+    </div>
+
+    <div class="card">
+      <h2>รายการคิวทั้งหมด</h2>
+      <div id="orderList"></div>
+      <button class="danger" onclick="clearAll()">ล้างคิวทั้งหมด</button>
+    </div>
+
+  </div>
+
 </div>
-
-<div class="card">
-  <h2>สรุป</h2>
-  <p>รายรับ: <span id="income">0</span></p>
-  <p>รายจ่าย: <span id="expense">0</span></p>
-  <p>กำไรสุทธิ: <span id="profit">0</span></p>
-</div>
-
-<a href="index.html">กลับหน้าลูกค้า</a>
 
 <script src="script.js"></script>
 </body>
