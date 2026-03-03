@@ -108,3 +108,70 @@ function clearAll() {
 window.onload = function() {
   renderOrders();
 };
+// ====== แสดงหน้าเว็บลูกค้า ======
+function renderPublicPage() {
+  const orders = getOrders();
+
+  const currentDiv = document.getElementById("currentWork");
+  const publicQueue = document.getElementById("publicQueue");
+
+  if (!publicQueue) return;
+
+  publicQueue.innerHTML = "";
+
+  // หาอันที่กำลังทำ
+  const doingOrder = orders.find(o => o.status === "doing");
+
+  if (currentDiv) {
+    if (doingOrder) {
+      currentDiv.innerHTML = `
+        <strong>${doingOrder.id}</strong> - ${doingOrder.name}<br>
+        งาน: ${doingOrder.job}<br>
+        <small>${doingOrder.progress || ""}</small>
+      `;
+    } else {
+      currentDiv.innerText = "ยังไม่มีงานกำลังทำ";
+    }
+  }
+
+  // แสดงคิวทั้งหมด
+  orders.forEach(order => {
+    const div = document.createElement("div");
+    div.className = "order-item";
+    div.innerHTML = `
+      <strong>${order.id}</strong> - ${order.name}<br>
+      ${translateStatus(order.status)}<br>
+      <small>${order.progress || ""}</small>
+    `;
+    publicQueue.appendChild(div);
+  });
+}
+
+// ====== ค้นหาออเดอร์ ======
+function searchOrder() {
+  const input = document.getElementById("searchInput").value.trim();
+  const resultDiv = document.getElementById("searchResult");
+
+  const orders = getOrders();
+  const found = orders.find(o => o.id === input);
+
+  if (!found) {
+    resultDiv.innerHTML = "ไม่พบหมายเลขนี้";
+    return;
+  }
+
+  resultDiv.innerHTML = `
+    <div class="order-item">
+      <strong>${found.id}</strong><br>
+      ชื่อ: ${found.name}<br>
+      งาน: ${found.job}<br>
+      ${translateStatus(found.status)}<br>
+      <small>${found.progress || ""}</small>
+    </div>
+  `;
+}
+
+// โหลดหน้า public ด้วย
+window.addEventListener("load", function() {
+  renderPublicPage();
+});
