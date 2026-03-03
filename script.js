@@ -175,3 +175,18 @@ function searchOrder() {
 window.addEventListener("load", function() {
   renderPublicPage();
 });
+// ====== ระบบ Login ======
+const ADMIN_PASSWORD = "pingjudy123"; // เปลี่ยนรหัสได้ตรงนี้
+
+function checkLogin() {
+  const input = document.getElementById("adminPassword").value;
+  const errorText = document.getElementById("loginError");
+
+  if (input === ADMIN_PASSWORD) {
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("adminPanel").style.display = "block";
+    renderOrders();
+  } else {
+    errorText.innerText = "รหัสผ่านไม่ถูกต้อง";
+  }
+}
